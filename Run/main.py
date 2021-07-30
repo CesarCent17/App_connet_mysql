@@ -35,10 +35,10 @@ class Core:
         cedula = input("Cedula: ")
         edad = self.obE.Int("Edad: ")
         direccion =  input("Direccion: ")
-        obj = self.obUb.posicionuser(cedula, self.obCo.consultar_usuario())
-        if obj != None:
-            print("Usuario ya existe!")
-            self.main()
+        #obj = self.obUb.posicionuser(cedula, self.obCo.consultar_usuario())
+        #if obj != None:
+        #   print("Usuario ya existe!")
+        #  self.main()
         self.obCo.insertar_usuario(cedula, nombre, apellido, edad, direccion)
         print("\t\t Cuenta creada con exito!")
 
