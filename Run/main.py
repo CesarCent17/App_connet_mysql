@@ -15,7 +15,7 @@ class Core:
 
     def main(self):
         print("Bienvenido al menu")
-        self.opciones = ("Crear usuario, Eliminar usuario, Salir")
+        self.opciones = ("Crear usuario", "Consultar usuarios", "Eliminar usuario", "Salir")
         opc = self.obM.menuyop(self.opciones)
 
         if opc == 1:
@@ -23,9 +23,12 @@ class Core:
             self.main()
 
         elif opc == 2:
+            self.queryusers()
+            self.main()
+        elif opc == 3:
             pass
 
-        elif opc == 3:
+        elif opc == 4:
             print("Gracias, adios")
 
     def crearuser(self):
@@ -35,12 +38,21 @@ class Core:
         cedula = input("Cedula: ")
         edad = self.obE.Int("Edad: ")
         direccion =  input("Direccion: ")
-        #obj = self.obUb.posicionuser(cedula, self.obCo.consultar_usuario())
-        #if obj != None:
-        #   print("Usuario ya existe!")
-        #  self.main()
-        self.obCo.insertar_usuario(cedula, nombre, apellido, edad, direccion)
+        regis = self.obCo.consultanorepetir(cedula)
+        if regis != 0:
+            print("Usted ya tiene cuenta")
+
+        else:
+            self.obCo.insertar_usuario(cedula= cedula, nombre= nombre, apellido= apellido, edad= edad, direccion=direccion)
+            print("\t\t Cuenta creada con exito!")
+
         print("\t\t Cuenta creada con exito!")
+
+
+
+
+    def queryusers(self):
+        print(self.obCo.consultar_usuario())
 
 
 

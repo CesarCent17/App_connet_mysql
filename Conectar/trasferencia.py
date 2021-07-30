@@ -11,18 +11,11 @@ class Transferencia:
     def consultanorepetir(self,cedula):
 
         cur = unir.cursor()
-        cur.execute(f"SELECT cedula FROM usuario")
-        #datos = cur.run_query()
-
-        for cedula in cur.fetchall():
-            if cedula == cedula:
-                registrado = "si"
-            else: #cedula != cur.fetchall():
-                registrado = "no"
-
+        cur.execute(f"SELECT cedula FROM usuario WHERE cedula = {cedula}")
+        registro = len(cur.fetchall())
         cur.close()
         unir.close()
-        return registrado
+        return registro
 
 
     def insertar_usuario(self, cedula, nombre, apellido, edad, direccion):
@@ -47,6 +40,5 @@ class Transferencia:
         return msg
 
 
-Gaspar = Transferencia()
-cedula = "0929240356"
-print(Gaspar.consultanorepetir(cedula))
+#Gaspar = Transferencia()
+#Gaspar.insertar_usuario("0987654321", "Alex", "g", 25, "j")
