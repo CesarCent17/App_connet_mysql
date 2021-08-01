@@ -6,15 +6,15 @@ class Transferencia:
         cur.execute("SELECT * FROM usuario")
         datos = cur.fetchall()
         cur.close()
-        unir.close()
+        #unir.close()
         return datos
     def consultanorepetir(self,cedula):
 
         cur = unir.cursor()
-        cur.execute(f"SELECT cedula FROM usuario WHERE cedula = {cedula}")
+        cur.execute(f"SELECT cedula FROM usuario WHERE cedula = '{cedula}'")
         registro = len(cur.fetchall())
         cur.close()
-        unir.close()
+        #unir.close()
         return registro
 
 
@@ -40,5 +40,14 @@ class Transferencia:
         return msg
 
 
-#Gaspar = Transferencia()
-#Gaspar.insertar_usuario("0987654321", "Alex", "g", 25, "j")
+    def editar_usuarios(self,cedula, nombre, apellido, edad, direccion):
+        cur = unir.cursor()
+        sql = f"UPDATE usuario\
+        SET nombre = '{nombre}', apellido = '{apellido}', edad = {edad}, direccion =\
+        '{direccion}' WHERE cedula = '{cedula}'"
+        cur.execute(sql)
+        contar = cur.rowcount
+        msg = f"Se modifico: {contar} registro"
+        unir.commit()
+        cur.close()
+        return msg

@@ -1,4 +1,4 @@
-#from Entidades.entidades import *
+from Entidades.entidades import *
 from Inputs.entradas import *
 from Menu.menu import *
 from Ubicacion.ubicacion import *
@@ -15,7 +15,7 @@ class Core:
 
     def main(self):
         print("Bienvenido al menu")
-        self.opciones = ("Crear usuario", "Consultar usuarios", "Eliminar usuario", "Salir")
+        self.opciones = ("Crear usuario", "Consultar usuarios", "Editar usuario", "Eliminar usuario", "Salir")
         opc = self.obM.menuyop(self.opciones)
 
         if opc == 1:
@@ -25,37 +25,75 @@ class Core:
         elif opc == 2:
             self.queryusers()
             self.main()
+
         elif opc == 3:
-            pass
+            self.edit()
+            self.main()
+
 
         elif opc == 4:
+            self.deleteuser()
+            self.main()
+
+        elif opc == 5:
             print("Gracias, adios")
 
     def crearuser(self):
+        print("\n")
         print("\t\t Registro de usuario")
         nombre = input("Nombre: ")
         apellido = input("Apellido: ")
-        cedula = input("Cedula: ")
-        edad = self.obE.Int("Edad: ")
+        cedula = self.obE.Ced_ten("Cedula: ")
+        #edad = self.obE.("Edad: ")
+        edad = self.obE.year("Edad: ")
         direccion =  input("Direccion: ")
         regis = self.obCo.consultanorepetir(cedula)
         if regis != 0:
-            print("Usted ya tiene cuenta")
+            print("Usted ya tiene cuenta\n")
 
         else:
             self.obCo.insertar_usuario(cedula= cedula, nombre= nombre, apellido= apellido, edad= edad, direccion=direccion)
-            print("\t\t Cuenta creada con exito!")
-
-        print("\t\t Cuenta creada con exito!")
-
+            print("\t\t Cuenta creada con exito!\n")
 
 
 
     def queryusers(self):
-        print(self.obCo.consultar_usuario())
+        print("\n")
+        print("\t\t Consulta de usuario\n")
+        lista = []
+        dat = self.obCo.consultar_usuario()
+        for linea in dat:
+            tupla = linea
+            obj = Usuario(tupla[1],tupla[2],(tupla[3]), int(tupla[4]), tupla[5])
+            lista.append(obj)
+            print(obj.getDatos())
 
 
+    def deleteuser(self):
+        print("\n")
+        print("\t\t Eliminacion de cuenta")
+        cedula = self.obE.Ced_ten("Cedula: ")
+        regis = self.obCo.consultanorepetir(cedula)
+        if regis == 1:
+            print(self.obCo.eliminar_usuarios(cedula))
+            print("Cuenta eliminada con exito\n")
+        elif regis == 0:
+            print("Usted no tiene cuenta!\n")
 
 
+    def edit(self):
+        print("\n")
+        print("\t\t Editar usuario")
+        cedula = self.obE.Ced_ten("Cedula: ")
+        regis = self.obCo.consultanorepetir(cedula)
+        if regis == 1:
+            nombre = input("Nombre: ")
+            apellido = input("Apellido: ")
+            edad = self.obE.year("Edad: ")
+            direccion = input("Direccion: ")
+            print(self.obCo.editar_usuarios(cedula, nombre, apellido , edad, direccion))
+            print("Cuenta editada con exito\n")
 
+        elif regis == 0:
+            print("Usted no tiene cuenta!\n")
 

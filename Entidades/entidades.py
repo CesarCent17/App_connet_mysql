@@ -6,4 +6,12 @@ class Usuario:
         self.edad = edad
         self.direccion = direccion
 
+    def getDatos(self):
+        msg = f"cedula: {self.cedula}\n" \
+              f"nombre: {self.nombre}\n"\
+              f"apellido: {self.apellido}\n" \
+              "edad: "+ str(self.edad)+"\n" \
+              f"direccion: {self.direccion}\n"
+        return msg
+
 
