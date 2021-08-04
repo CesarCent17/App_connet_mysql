@@ -15,7 +15,8 @@ class Core:
 
     def main(self):
         print("Bienvenido al menu")
-        self.opciones = ("Crear usuario", "Consultar usuarios", "Editar usuario", "Eliminar usuario", "Salir")
+        self.opciones = ("Crear usuario", "Consultar usuarios", "Editar usuario", "Eliminar usuario", "Consulta personal",
+                         "Salir")
         opc = self.obM.menuyop(self.opciones)
 
         if opc == 1:
@@ -36,6 +37,10 @@ class Core:
             self.main()
 
         elif opc == 5:
+            self.consultapersonal()
+            self.main()
+
+        elif opc == 6:
             print("Gracias, adios")
 
     def crearuser(self):
@@ -52,21 +57,30 @@ class Core:
             print("Usted ya tiene cuenta\n")
 
         else:
-            self.obCo.insertar_usuario(cedula= cedula, nombre= nombre, apellido= apellido, edad= edad, direccion=direccion)
+            tupla = (cedula, nombre, apellido, edad, direccion)
+
+            msg = self.obCo.insertar_usuario(tupla)
+            print(msg)
             print("\t\t Cuenta creada con exito!\n")
 
+    def consultapersonal(self):
+        print("\t\t Consulta personal")
+        cedula = self.obE.Ced_ten("Cedula: ")
+        obj = self.obCo.getUsuario(cedula)
+        if obj != None:
+            print(obj.getDatos())
+        else:
+            print("Usted no esta registrado")
 
 
     def queryusers(self):
         print("\n")
         print("\t\t Consulta de usuario\n")
-        lista = []
-        dat = self.obCo.consultar_usuario()
-        for linea in dat:
-            tupla = linea
-            obj = Usuario(tupla[1],tupla[2],(tupla[3]), int(tupla[4]), tupla[5])
-            lista.append(obj)
-            print(obj.getDatos())
+
+        lista = self.obCo.listar_usuario()
+
+        for i in range(len(lista)):
+            print(lista[i].getDatos())
 
 
     def deleteuser(self):
@@ -91,7 +105,8 @@ class Core:
             apellido = input("Apellido: ")
             edad = self.obE.year("Edad: ")
             direccion = input("Direccion: ")
-            print(self.obCo.editar_usuarios(cedula, nombre, apellido , edad, direccion))
+            tupla = (nombre, apellido, edad, direccion, cedula)
+            print(self.obCo.editar_usuarios(tupla))
             print("Cuenta editada con exito\n")
 
         elif regis == 0:
