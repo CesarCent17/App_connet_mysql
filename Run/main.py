@@ -15,8 +15,8 @@ class Core:
 
     def main(self):
         print("Bienvenido al menu")
-        self.opciones = ("Crear usuario", "Consultar usuarios", "Editar usuario", "Eliminar usuario", "Consulta personal",
-                         "Salir")
+        self.opciones = ("Crear usuario", "Consultar usuarios", "Editar usuario", "Consulta personal", "Eliminar usuario",
+        "Salir")
         opc = self.obM.menuyop(self.opciones)
 
         if opc == 1:
@@ -31,13 +31,12 @@ class Core:
             self.edit()
             self.main()
 
-
         elif opc == 4:
-            self.deleteuser()
+            self.consultapersonal()
             self.main()
 
         elif opc == 5:
-            self.consultapersonal()
+            self.deleteuser()
             self.main()
 
         elif opc == 6:
