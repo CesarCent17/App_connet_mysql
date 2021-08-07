@@ -1,8 +1,8 @@
-from Entidades.entidades import *
-from Inputs.entradas import *
-from Menu.menu import *
-from Ubicacion.ubicacion import *
-from Conectar.trasferencia import *
+from Entidades.entidades import * #nataly
+from Inputs.entradas import * #edward
+from Menu.menu import * #edward
+from Ubicacion.ubicacion import * #edward
+from Conectar.trasferencia import * #nataly
 
 class Core:
     def __init__(self):
@@ -50,6 +50,7 @@ class Core:
         cedula = self.obE.Ced_ten("Cedula: ")
         #edad = self.obE.("Edad: ")
         edad = self.obE.year("Edad: ")
+        #edad = self.obE.year("Edad: ")
         direccion =  input("Direccion: ")
         regis = self.obCo.consultanorepetir(cedula)
         if regis != 0:
@@ -65,7 +66,7 @@ class Core:
     def consultapersonal(self):
         print("\t\t Consulta personal")
         cedula = self.obE.Ced_ten("Cedula: ")
-        obj = self.obCo.getUsuario(cedula)
+        obj = self.obCo.getUsuario(cedula) #
         if obj != None:
             print(obj.getDatos())
         else:

@@ -22,14 +22,14 @@ class Transferencia:
         lista = []
         cnn = self.obCo.conecta()
         cur = cnn.cursor()
-        cur.execute("SELECT * FROM usuario")
+        cur.execute("SELECT * FROM usuario") #script
         datos = cur.fetchall()
-        for i in range(len(datos)):
-            obj = Usuario(datos[i][1], datos[i][2], datos[i][3], datos[i][4], datos[i][5])
+        for i in range(len(datos)): #recorremos la matriz
+            obj = Usuario(datos[i][1], datos[i][2], datos[i][3], datos[i][4], datos[i][5]) #en cada vuelta creamos un ob
             lista.append(obj)
         cur.close()
         #unir.close()
-        return lista
+        return lista #retornamos la lista de objetos
 
 
 
@@ -73,7 +73,7 @@ class Transferencia:
     def eliminar_usuarios(self, cedula):
         cnn = self.obCo.conecta()
         cur = cnn.cursor()
-        sql = f'DELETE FROM usuario WHERE cedula = {cedula}'
+        sql = f'DELETE FROM usuario WHERE cedula = {cedula}' #script
         cur.execute(sql)
         contar = cur.rowcount
         msg = f"Se eliminaron: {contar} registro"
